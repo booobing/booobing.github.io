@@ -1,0 +1,5 @@
+interface:
+  display_name: "charter-first"
+  short_description: "Use when a request arrives without a clear plan. Produces a bounded charter before implementation."
+policy:
+  allow_implicit_invocation: true

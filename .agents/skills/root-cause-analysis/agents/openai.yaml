@@ -1,0 +1,5 @@
+interface:
+  display_name: "root-cause-analysis"
+  short_description: "Use when Clarification Debt reaches threshold or the same class of mistake repeats. Focuses on why the failure happened and how to prevent recurrence."
+policy:
+  allow_implicit_invocation: true

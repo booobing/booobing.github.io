@@ -1,0 +1,35 @@
+[project]
+name = "codex-project-template"
+version = "0.1.0"
+description = "Operational template for Codex-agent-ready projects."
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.11",
+]
+
+[tool.ruff]
+extend-exclude = [
+    ".harness/tmp",
+    ".harness/*-cache",
+    ".venv",
+    "ponytail",
+]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+ignore = ["E501"]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+addopts = "-ra -p no:cacheprovider"
+testpaths = ["tests"]
+
+[tool.uv]
+package = false
+cache-dir = ".harness/uv-cache"

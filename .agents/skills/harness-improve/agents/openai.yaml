@@ -1,0 +1,5 @@
+interface:
+  display_name: "harness-improve"
+  short_description: "Use when an RCA or repeated lesson proposes a harness change. Proposes invariant/domain edits, re-runs the same task to compare, and keeps only evidence-backed changes."
+policy:
+  allow_implicit_invocation: true

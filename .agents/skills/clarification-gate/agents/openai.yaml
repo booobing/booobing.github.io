@@ -1,0 +1,5 @@
+interface:
+  display_name: "clarification-gate"
+  short_description: "Use when requirements feel vague or conflicting. Classifies ambiguity and determines whether to proceed, propose options, or halt."
+policy:
+  allow_implicit_invocation: true

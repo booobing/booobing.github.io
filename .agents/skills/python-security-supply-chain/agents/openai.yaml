@@ -1,0 +1,5 @@
+interface:
+  display_name: "python-security-supply-chain"
+  short_description: "Use for Python dependency changes, publishing, security review, or CI hardening. Focuses on static rules, lockfiles, audits, SBOMs, and trusted publishing."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,105 @@
+name: self-hosted-codex-review
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  advisory-review:
+    if: ${{ !github.event.pull_request.draft && vars.CODEX_GITHUB_CONNECTED == 'true' }}
+    runs-on:
+      - self-hosted
+      - codex-review
+    continue-on-error: true
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create temp workspace
+        run: mkdir -p .harness/tmp
+
+      - name: Preflight
+        id: preflight
+        shell: bash
+        env:
+          CODEX_GITHUB_CONNECTED: ${{ vars.CODEX_GITHUB_CONNECTED }}
+          GITHUB_TOKEN: ${{ github.token }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ "${CODEX_GITHUB_CONNECTED:-false}" != "true" ]; then
+            printf '%s\n' 'GitHub account connection is not enabled for this repository.' > .harness/tmp/codex-review.md
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if ! command -v codex >/dev/null 2>&1; then
+            printf '%s\n' 'codex CLI is not installed on this runner.' > .harness/tmp/codex-review.md
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ -z "${GITHUB_TOKEN:-}" ]; then
+            printf '%s\n' 'GitHub token is not available on this runner.' > .harness/tmp/codex-review.md
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ -z "${OPENAI_API_KEY:-}" ]; then
+            printf '%s\n' 'OPENAI_API_KEY is not configured for this runner.' > .harness/tmp/codex-review.md
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - name: Run advisory review
+        if: steps.preflight.outputs.ready == 'true'
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          codex exec --skip-git-repo-check \
+            "Review this pull request in read-only mode. Focus on charter/request mismatch, public interface regressions, missing tests, unsafe file or network behavior, generated artifact hygiene, and accidental scope expansion. Base branch is origin/${{ github.base_ref }}. Return concise findings only, or 'No findings.' if nothing is actionable." \
+            > .harness/tmp/codex-review.md
+
+      - name: Upload advisory review artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-review
+          path: .harness/tmp/codex-review.md
+
+      - name: Post advisory review comment
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const path = ".harness/tmp/codex-review.md";
+            if (!fs.existsSync(path)) {
+              return;
+            }
+
+            const body = fs.readFileSync(path, "utf8").trim();
+            if (!body) {
+              return;
+            }
+
+            const comment = `## Codex Advisory Review\n\n${body}`.slice(0, 65000);
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: comment,
+            });

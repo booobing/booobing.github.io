@@ -1,0 +1,5 @@
+interface:
+  display_name: "brainstorm-no-code"
+  short_description: "Use when the goal is to explore approaches before any implementation. Produces options, tradeoffs, and a recommended plan without code changes."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,5 @@
+interface:
+  display_name: "review-synthesizer"
+  short_description: "Use after explorer/reviewer/qa/security subagents return findings. Produces one owner-style verdict with severity and next actions."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,2 @@
+{"ts":"2026-01-01T00:00:00Z","task_id":"TASK-EXAMPLE","event":"started_without_charter","score":15,"note":"Implementation began before a charter fixed objective and touched files.","files":["README.md"]}
+{"ts":"2026-01-01T00:05:00Z","task_id":"TASK-EXAMPLE","event":"correct","score":25,"note":"A public interface assumption changed after review.","files":["docs/charter.md","tests/example_test.py"]}

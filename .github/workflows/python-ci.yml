@@ -1,0 +1,41 @@
+name: template-ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  template:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.9.11"
+
+      - name: Setup
+        run: uv sync --frozen
+
+      - name: Lint
+        run: uv run --frozen ruff check .
+
+      - name: Test
+        run: uv run --frozen python -m pytest -q
+
+      - name: Clarification debt
+        run: uv run --frozen python .harness/scripts/cd_status.py

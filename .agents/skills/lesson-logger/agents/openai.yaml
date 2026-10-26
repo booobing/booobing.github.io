@@ -1,0 +1,5 @@
+interface:
+  display_name: "lesson-logger"
+  short_description: "Use when a correction, rollback, or repeated mistake happens. Converts mistakes into structured event logs and short active lessons."
+policy:
+  allow_implicit_invocation: true

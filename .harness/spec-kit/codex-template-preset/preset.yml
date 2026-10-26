@@ -1,0 +1,45 @@
+schema_version: "1.0"
+
+preset:
+  id: "codex-template-bridge"
+  name: "Codex Project Template Bridge"
+  version: "1.0.0"
+  description: "Aligns Spec Kit artifacts with the Codex project template charter, checkpoint, review, and lesson loop."
+  author: "codex-project-template"
+  repository: "local"
+  license: "MIT"
+
+requires:
+  speckit_version: ">=0.8.7"
+
+provides:
+  templates:
+    - type: "template"
+      name: "constitution-template"
+      file: "templates/constitution-template.md"
+      strategy: "replace"
+      description: "Mirror AGENTS.md and active lessons instead of replacing repository governance"
+
+    - type: "template"
+      name: "spec-template"
+      file: "templates/spec-template.md"
+      strategy: "replace"
+      description: "Feature spec with charter alignment, non-goals, ambiguity, and checkpoints"
+
+    - type: "template"
+      name: "plan-template"
+      file: "templates/plan-template.md"
+      strategy: "replace"
+      description: "Implementation plan aligned to touched files, rollback, and harness checkpoints"
+
+    - type: "template"
+      name: "tasks-template"
+      file: "templates/tasks-template.md"
+      strategy: "replace"
+      description: "Task list that ends with harness checkpoint, review, and lesson tasks"
+
+tags:
+  - "codex"
+  - "template"
+  - "governance"
+  - "checkpoint"

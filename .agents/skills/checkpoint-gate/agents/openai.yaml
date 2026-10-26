@@ -1,0 +1,5 @@
+interface:
+  display_name: "checkpoint-gate"
+  short_description: "Use after implementation or review to enforce required checkpoints and stop progression on failure."
+policy:
+  allow_implicit_invocation: true

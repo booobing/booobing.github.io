@@ -1,0 +1,18 @@
+{
+  "description": "Run Ruff after Python files are edited in Codex.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --frozen --project \"$(git rev-parse --show-toplevel)\" python \"$(git rev-parse --show-toplevel)/.harness/scripts/ruff_hook.py\"",
+            "commandWindows": "for /f \"delims=\" %i in ('git rev-parse --show-toplevel') do @uv run --frozen --project \"%i\" python \"%i/.harness/scripts/ruff_hook.py\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+required:
+  - charter_exists
+  - repo_cleanliness_review
+  - lint_optional
+  - test_optional
+  - speckit_optional
+  - clarification_debt
+commands:
+  charter_exists: "uv run --frozen python -c \"from pathlib import Path; assert Path('docs/charter.md').exists() or Path('docs/charter.template.md').exists()\""
+  repo_cleanliness_review: "uv run --frozen python -m pytest -q tests/test_template_integrity.py"
+  lint_optional: "uv run --frozen ruff check ."
+  test_optional: "uv run --frozen python -m pytest -q"
+  speckit_optional: "uv run --frozen python .harness/scripts/speckit_status.py"
+  clarification_debt: "uv run --frozen python .harness/scripts/cd_status.py"
+policies:
+  charter_first: "Every task should have docs/charter.md or an explicit task charter before implementation."
+  scratch_root: "Scratch outputs belong under .harness/tmp/ and should not be committed."
+  project_specific_checks: "Replace lint_optional and test_optional with real project commands once a stack exists."
+  spec_kit_bridge: "When .specify exists, Spec Kit artifacts are planning inputs; .harness checkpoints remain the completion gate."
+thresholds:
+  rca_at: 50
+  halt_at: 80
+events:
+  clarify: 10
+  correct: 25
+  redo: 40
+  started_without_charter: 15
+  out_of_bounds_edit: 20
+  repeated_error_multiplier: 1.5
