@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0d13">
+    <meta name="description" content="마법의 책을 펼쳐 보세요. 한 장의 사진, 그 안의 사람들, 그리고 작은 우연을 만나세요.">
+    <title>마법의 책 · The People Book</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='5' y='2' width='30' height='36' rx='3' fill='%23203d34'/%3E%3Cpath d='M12 7h16v26H12z' fill='none' stroke='%23c4a66d'/%3E%3Ctext x='20' y='26' text-anchor='middle' font-size='20' fill='%23c4a66d'%3E✧%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="./styles.css?v=bbc031c32afb">
+    <script type="module" src="./game.js?v=dd2731548dd8"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="마법의 책 처음으로">
+        <svg viewBox="0 0 30 30" aria-hidden="true"><path d="M15 7C10 3 5 5 3 6v18c4-2 8-2 12 1 4-3 8-3 12-1V6c-2-1-7-3-12 1Zm0 0v18"/></svg>
+        <span>마법의 책</span>
+      </a>
+      <button class="text-button" id="about-button" type="button">이용 안내 <span aria-hidden="true">↗</span></button>
+    </header>
+
+    <main>
+      <div class="intro">
+        <p class="eyebrow">THE BOOK OF CHANCE</p>
+        <h1>마법의 책</h1>
+        <p class="intro-copy">책을 펼치면 한 장의 사진과 그 안의 사람 수가 나타나요.</p>
+      </div>
+
+      <section class="game" aria-label="마법의 책 게임">
+        <div class="book-stage" id="book-stage" aria-busy="false">
+          <div class="closed-book" id="closed-book" aria-hidden="true">
+            <div class="lobby-book" id="lobby-book">
+              <div class="lobby-float">
+                <div class="lobby-volume">
+                  <span class="lobby-pages"></span>
+                  <span class="lobby-spine"></span>
+                  <span class="lobby-bottom"></span>
+                  <img class="lobby-cover" src="./assets/book-cover.webp" alt="" width="600" height="800">
+                </div>
+              </div>
+              <div class="lobby-particles" id="lobby-particles"></div>
+            </div>
+          </div>
+          <video id="opening-video" class="book-video" muted playsinline preload="none" poster="./assets/book-closed.webp" aria-hidden="true" hidden></video>
+          <div class="open-book" id="open-book" hidden>
+            <img class="book-still" src="./assets/book-open.webp" alt="빛으로 가득한 펼쳐진 마법의 책" width="960" height="600">
+              <figure class="book-photo" aria-describedby="photo-caption">
+                <img id="people-photo" alt="" width="960" height="640">
+              </figure>
+          </div>
+        </div>
+        <div class="result-summary" id="result-summary" hidden>
+          <p>사진 속 사람은 <strong id="people-count"></strong><span>명</span></p>
+          <p id="photo-caption"></p>
+        </div>
+        <div class="game-controls">
+          <p class="status" id="status" role="status">당신을 위한 첫 페이지가 기다리고 있어요.</p>
+          <button class="primary-button" id="draw-button" type="button" disabled>
+            <span id="draw-label">책 준비 중</span><span class="button-arrow" aria-hidden="true">↗</span>
+          </button>
+          <p class="play-note" id="play-note">첫 펼치기는 무료 · 다시 펼칠 때는 광고 시청</p>
+          <p class="storage-warning" id="storage-warning" role="status" hidden>이 브라우저에서는 이용 기록을 저장할 수 없어 새로고침하면 무료 이용이 초기화돼요.</p>
+        </div>
+      </section>
+
+      <aside class="banner-ad" aria-label="하단 광고 자리, 현재 테스트 모드">
+        <span class="ad-label">AD</span>
+        <span>이야기 사이, 작은 광고 자리</span>
+        <span class="banner-demo">테스트 모드</span>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <span>한 장의 사진, 작은 우연.</span>
+      <span>THE PEOPLE BOOK <span aria-hidden="true">©</span> 2026</span>
+    </footer>
+
+    <dialog id="reward-dialog" aria-labelledby="reward-title" aria-describedby="reward-description">
+      <button class="dialog-close" id="reward-close" type="button" aria-label="광고 창 닫기">×</button>
+      <div id="reward-prompt">
+        <span class="dialog-symbol" aria-hidden="true">✧</span>
+        <p class="eyebrow">ONE MORE PAGE</p>
+        <h2 id="reward-title">다음 페이지를 펼칠까요?</h2>
+        <p id="reward-description">광고를 시청하면 한 번 더 펼칠 수 있어요.<br>지금은 실제 광고가 없는 <b>테스트 모드</b>예요.</p>
+        <button class="primary-button" id="watch-demo" type="button">테스트 광고 보기 <span aria-hidden="true">↗</span></button>
+        <button class="secondary-button" id="reward-cancel" type="button">지금은 괜찮아요</button>
+      </div>
+      <div id="reward-demo" hidden>
+        <p class="eyebrow">DEMO AD · 실제 광고 아님</p>
+        <h2 id="demo-title" tabindex="-1">잠깐의 쉼, 새로운 한 장.</h2>
+        <div class="demo-creative" aria-hidden="true"><span>✦</span><i>A little pause.<br>A new story.</i></div>
+        <p>광고 시청 완료 흐름을 체험하는 화면이에요.<br>아래 버튼으로 테스트를 완료해 주세요.</p>
+        <button class="primary-button" id="complete-demo" type="button">테스트 시청 완료 · 책 펼치기</button>
+      </div>
+    </dialog>
+
+    <dialog id="about-dialog" aria-labelledby="about-title">
+      <button class="dialog-close" id="about-close" type="button" aria-label="이용 안내 닫기">×</button>
+      <p class="eyebrow">ABOUT THIS BOOK</p>
+      <h2 id="about-title">작은 책의 이용 안내</h2>
+      <dl class="about-list">
+        <dt>어떻게 이용하나요?</dt><dd>펼치기!를 누르면 빛과 함께 책이 열리는 순간 강한 후광을 두른 사진과 사람 수가 나타나요. 사진 뒤로 영상의 빛과 입자가 이어져요. 같은 사진은 연속으로 나오지 않아요. 기기의 모션 줄이기 설정을 사용하면 영상 없이 결과를 보여드려요.</dd>
+        <dt>첫 페이지는 무료예요.</dt><dd>탭 세션마다 첫 펼치기는 무료예요. 새로고침해도 기록이 유지되며, 그다음부터는 광고 시청 후 한 번씩 펼칠 수 있어요.</dd>
+        <dt>지금은 광고 테스트 중이에요.</dt><dd>하단 배너와 시청 화면은 테스트용이며 실제 광고를 송출하거나 수익을 발생시키지 않아요. 창을 닫으면 다시 펼치기 권리가 생기지 않아요.</dd>
+        <dt>사진 속 사람들은 누구인가요?</dt><dd>사진 100장은 AI로 만든 가상의 성인들로, 실제 모임을 촬영한 사진이 아니에요. 거리·카페 등 일상 장면 95장과 축구장 등 특별 장면 5장이 있어요. 사람 수는 이미지를 직접 확인해 기록했어요.</dd>
+        <dt>무엇을 저장하나요?</dt><dd>무료 이용 여부·남은 재시도 권리·직전 사진 번호만 브라우저의 세션 저장소에 기록해요. 이 테스트 버전은 계정, 분석 도구, 추적 광고를 사용하지 않아요.</dd>
+      </dl>
+    </dialog>
+    <noscript><p class="no-script">책을 펼치려면 브라우저에서 JavaScript를 켜 주세요.</p></noscript>
+  </body>
+</html>
