@@ -98,4 +98,7 @@
 - Visual review: 데스크톱·320px 정적 콘텐츠/개인정보 스크린샷을 직접 확인했다. 예시 사진에 원본 링크와 인원수·장면 설명이 있고 콘텐츠 겹침·가로 넘침이 없다. 모바일에서 줄바꿈을 숨길 때 붙는 ‘숫자를만드는’ 표기는 HTML 공백으로 교정했다.
 - Payload: 초기 자산 상한 510,228 bytes (예시 3장 모두 포함), 전체 배포 11,875,837 bytes. 검증용 버전 해시는 LF로 정규화해 Windows 체크아웃의 줄바꿈에 영향을 받지 않도록 검사한다.
 - Final review: 수정할 것 없음. 승인된 무료 반복 요구·고딕/영상/100장 계약·정적 콘텐츠·개인정보·계정 확인을 대조했다. 스크립트/임계치/이력은 보존됐고 새 테스트는 실제 브라우저 동작과 공개 요청을 확인한다. 이번 제품 변경과 직접 필요한 테스트·검수 기록·게임 게이트·운영 교훈만 선택해 커밋하며 다른 이전 미커밋 작업은 남긴다.
-- Public deploy: pending.
+- Public deploy: PASS. 제품 커밋 `b2811f9bb8ca3d6c167b4b30b726246da7f5dd2a`를 `pages/main`에 push했고 [Pages 실행 41875794006](https://github.com/booobing/booobing.github.io/actions/runs/41875794006)이 37초에 성공했다. 원격 `origin`은 이번에 push하지 않았다.
+- Public verification: 실제 홈페이지/개인정보 HTTP 200, 정적 사진 예시 3개와 예시 파일 3/3 HTTP 200, 계정 메타 태그 있음, 광고 런타임·데모 창 없음, 공개 JS와 검증한 로컬 JS 내용 일치. `.harness/tmp/adsense-published-b2811f9.html`에 공개 HTML을 보관했다.
+- UI proof: 기존 IAB 오류 탭은 잘못된 오류 페이지 상태를 유지해 새로운 IAB 탭에서 `https://booobing.github.io/`를 열었다. 새 정적 콘텐츠와 무료 이용 문구를 실제 AX/스크린샷으로 확인했다. 공개 결과 탭을 deliverable로 유지했으며 `.harness/tmp/adsense-public-content.png`에 저장했다.
+- Remaining external action: AdSense 계정에서 확인 방법을 선택해야 하면 메타 태그를 사용하고 수정된 사이트의 재검토를 요청한다. 계정 설정·재검토 신청은 실행하지 않았으며 정책 승인 여부는 Google이 판단한다.
