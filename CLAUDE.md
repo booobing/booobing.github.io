@@ -68,3 +68,4 @@ uv run --frozen python .harness/scripts/record_event.py <task_id> <event> <score
 ```
 
 CD >= 50이면 RCA와 lesson 갱신, CD >= 80이면 새 구현을 중단한다.
+사용자의 명시적인 원인 조치·재발 방지 및 계속 진행 지시는 `AGENTS.md`의 작업별 예외 규칙을 따른다. 승인 범위·RCA·검증을 charter에 연결하고 원래 CD 결과를 보존하며, 같은 승인 범위에 재승인을 반복 요구하지 않는다.

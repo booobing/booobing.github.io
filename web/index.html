@@ -4,13 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0b0d13">
-    <meta name="description" content="마법의 책을 펼쳐 보세요. 한 장의 사진, 그 안의 사람들, 그리고 작은 우연을 만나세요.">
+    <meta name="description" content="마법의 책을 펼치면 100장의 가상 일상 사진 중 한 장과 직접 확인한 사람 수가 나타납니다. 거리, 카페, 축구장의 장면을 무료로 만나 보세요.">
+    <meta name="google-adsense-account" content="ca-pub-8450600555475262">
     <title>마법의 책 · The People Book</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='5' y='2' width='30' height='36' rx='3' fill='%23203d34'/%3E%3Cpath d='M12 7h16v26H12z' fill='none' stroke='%23c4a66d'/%3E%3Ctext x='20' y='26' text-anchor='middle' font-size='20' fill='%23c4a66d'%3E✧%3C/text%3E%3C/svg%3E">
-    <link rel="stylesheet" href="./styles.css?v=bbc031c32afb">
-    <script type="module" src="./game.js?v=dd2731548dd8"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8450600555475262"
-     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./styles.css?v=3010ee5d4e7d">
+    <script type="module" src="./game.js?v=910281644a88"></script>
   </head>
   <body>
     <header class="site-header">
@@ -60,41 +59,56 @@
           <button class="primary-button" id="draw-button" type="button" disabled>
             <span id="draw-label">책 준비 중</span><span class="button-arrow" aria-hidden="true">↗</span>
           </button>
-          <p class="play-note" id="play-note">첫 펼치기는 무료 · 다시 펼칠 때는 광고 시청</p>
-          <p class="storage-warning" id="storage-warning" role="status" hidden>이 브라우저에서는 이용 기록을 저장할 수 없어 새로고침하면 무료 이용이 초기화돼요.</p>
+          <p class="play-note" id="play-note">광고 없이 무료로 펼쳐 보세요. 같은 사진은 연속으로 나오지 않아요.</p>
+          <p class="storage-warning" id="storage-warning" role="status" hidden>이 브라우저에서는 이용 기록을 저장할 수 없어 새로고침하면 직전 사진의 기억이 초기화돼요.</p>
         </div>
       </section>
 
-      <aside class="banner-ad" aria-label="하단 광고 자리, 현재 테스트 모드">
-        <span class="ad-label">AD</span>
-        <span>이야기 사이, 작은 광고 자리</span>
-        <span class="banner-demo">테스트 모드</span>
-      </aside>
+      <section class="book-guide reading-section" id="guide" aria-labelledby="guide-title">
+        <p class="eyebrow">A HUNDRED LITTLE MOMENTS</p>
+        <h2 id="guide-title">한 장의 풍경, 뜻밖의 사람 수</h2>
+        <p class="section-lead">마법의 책은 일상의 장면을 무작위로 만나는 작은 사진 게임이에요. 꽃집 앞을 걷는 사람부터 넓은 운동장의 무리까지, 책 속에는 서로 다른 100장의 사진이 담겨 있어요.</p>
+        <ol class="how-to">
+          <li><strong>책을 펼쳐요</strong><p>펼치기!를 누르면 빛과 함께 책이 열려요. 소리는 나지 않으며, 모션 줄이기를 설정하면 사진이 바로 나타나요.</p></li>
+          <li><strong>사진과 숫자를 만나요</strong><p>한 장의 사진과 그 안에 보이는 사람 수를 함께 보여드려요. 숫자를 보기 전 잠깐 눈으로 세어 보아도 좋아요.</p></li>
+          <li><strong>다른 장면으로 떠나요</strong><p>다시 펼치기!로 새로운 사진을 만나요. 지금은 모든 펼치기가 무료이며, 직전 사진은 다음 추첨에서 제외돼요.</p></li>
+        </ol>
+      </section>
+
+      <section class="reading-section" id="scenes" aria-labelledby="scenes-title">
+        <div class="section-heading"><div><p class="eyebrow">PAGES FROM THE BOOK</p><h2 id="scenes-title">책 속의 세 장면</h2></div><p>사진을 누르면 원본을 볼 수 있어요.</p></div>
+        <div class="scene-gallery">
+          <figure data-photo-id="scene-004" data-count="3">
+            <a href="./assets/scene-004.webp" aria-label="골목의 오후 원본 사진 보기"><img src="./assets/preview-street.webp" alt="꽃집 앞에 서 있는 한 사람과 골목을 걷는 두 사람" width="320" height="213" loading="lazy" decoding="async"></a>
+            <figcaption><span class="scene-kind">일상의 한 장</span><h3>골목의 오후 <span>3명</span></h3><p>꽃을 고르는 한 사람, 돌길을 걷는 두 사람. 골목을 조금 높은 곳에서 내려다본 장면이에요.</p></figcaption>
+          </figure>
+          <figure data-photo-id="scene-035" data-count="2">
+            <a href="./assets/scene-035.webp" aria-label="골목 안 작은 카페 원본 사진 보기"><img src="./assets/preview-cafe.webp" alt="야외 테이블에서 쉬는 한 사람과 카페 창가에 선 한 사람" width="320" height="213" loading="lazy" decoding="async"></a>
+            <figcaption><span class="scene-kind">일상의 한 장</span><h3>골목 안 작은 카페 <span>2명</span></h3><p>테이블에서 쉬는 사람과 창가에 선 사람. 작은 카페의 느긋한 오후에는 두 사람이 있어요.</p></figcaption>
+          </figure>
+          <figure data-photo-id="scene-100" data-count="30">
+            <a href="./assets/scene-100.webp" aria-label="주말 축구장 원본 사진 보기"><img src="./assets/preview-football.webp" alt="넓은 축구장에 둘씩 흩어져 연습하는 성인 서른 명" width="320" height="213" loading="lazy" decoding="async"></a>
+            <figcaption><span class="scene-kind">드문 특별 장면</span><h3>주말 축구장 <span>30명</span></h3><p>넓은 잔디 위, 두 사람씩 흩어져 연습하는 무리. 가까운 사람부터 먼 사람까지 세어 보면 서른 명이에요.</p></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="reading-section making-section" id="making" aria-labelledby="making-title">
+        <div><p class="eyebrow">BEHIND THE PAGES</p><h2 id="making-title">사진과 숫자를<br> 만드는 방법</h2></div>
+        <div class="making-copy">
+          <p>사진은 이 게임을 위해 AI로 제작한 가상의 성인과 장소예요. 실제 인물이나 모임의 기록이 아니며, 거리·카페·공원처럼 일상적인 장소를 중심으로 구성했어요.</p>
+          <p>일상 장면 95장과 많은 사람이 등장하는 특별 장면 5장이 있어요. 모든 사진의 추첨 확률은 같아서 첫 펼치기에서 특별 장면을 만날 확률은 5%예요. 점수나 당첨 보상은 없고, 사진 속 사람 수 자체가 결과예요.</p>
+          <p>사람 수는 AI에 요청한 숫자를 그대로 쓰지 않았어요. 완성된 사진 전체를 직접 살펴보고, 가까운 인물과 배경의 인물을 하나씩 세어 기록했어요. 인원이 모호한 후보는 제외하거나 다시 제작했어요.</p>
+          <p>화면의 숫자는 미리 검수한 값이며 실시간 사람 인식 결과가 아니에요. 직접 센 수와 다르게 보이거나 사진에 이상한 부분이 있다면 <a href="https://github.com/booobing/booobing.github.io/issues">사진 제목과 함께 알려 주세요</a>.</p>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
       <span>한 장의 사진, 작은 우연.</span>
+      <nav aria-label="사이트 안내"><a href="#guide">게임 안내</a><a href="./privacy.html">개인정보처리방침</a><a href="https://github.com/booobing/booobing.github.io/issues">문의·오류 신고</a></nav>
       <span>THE PEOPLE BOOK <span aria-hidden="true">©</span> 2026</span>
     </footer>
-
-    <dialog id="reward-dialog" aria-labelledby="reward-title" aria-describedby="reward-description">
-      <button class="dialog-close" id="reward-close" type="button" aria-label="광고 창 닫기">×</button>
-      <div id="reward-prompt">
-        <span class="dialog-symbol" aria-hidden="true">✧</span>
-        <p class="eyebrow">ONE MORE PAGE</p>
-        <h2 id="reward-title">다음 페이지를 펼칠까요?</h2>
-        <p id="reward-description">광고를 시청하면 한 번 더 펼칠 수 있어요.<br>지금은 실제 광고가 없는 <b>테스트 모드</b>예요.</p>
-        <button class="primary-button" id="watch-demo" type="button">테스트 광고 보기 <span aria-hidden="true">↗</span></button>
-        <button class="secondary-button" id="reward-cancel" type="button">지금은 괜찮아요</button>
-      </div>
-      <div id="reward-demo" hidden>
-        <p class="eyebrow">DEMO AD · 실제 광고 아님</p>
-        <h2 id="demo-title" tabindex="-1">잠깐의 쉼, 새로운 한 장.</h2>
-        <div class="demo-creative" aria-hidden="true"><span>✦</span><i>A little pause.<br>A new story.</i></div>
-        <p>광고 시청 완료 흐름을 체험하는 화면이에요.<br>아래 버튼으로 테스트를 완료해 주세요.</p>
-        <button class="primary-button" id="complete-demo" type="button">테스트 시청 완료 · 책 펼치기</button>
-      </div>
-    </dialog>
 
     <dialog id="about-dialog" aria-labelledby="about-title">
       <button class="dialog-close" id="about-close" type="button" aria-label="이용 안내 닫기">×</button>
@@ -102,10 +116,9 @@
       <h2 id="about-title">작은 책의 이용 안내</h2>
       <dl class="about-list">
         <dt>어떻게 이용하나요?</dt><dd>펼치기!를 누르면 빛과 함께 책이 열리는 순간 강한 후광을 두른 사진과 사람 수가 나타나요. 사진 뒤로 영상의 빛과 입자가 이어져요. 같은 사진은 연속으로 나오지 않아요. 기기의 모션 줄이기 설정을 사용하면 영상 없이 결과를 보여드려요.</dd>
-        <dt>첫 페이지는 무료예요.</dt><dd>탭 세션마다 첫 펼치기는 무료예요. 새로고침해도 기록이 유지되며, 그다음부터는 광고 시청 후 한 번씩 펼칠 수 있어요.</dd>
-        <dt>지금은 광고 테스트 중이에요.</dt><dd>하단 배너와 시청 화면은 테스트용이며 실제 광고를 송출하거나 수익을 발생시키지 않아요. 창을 닫으면 다시 펼치기 권리가 생기지 않아요.</dd>
+        <dt>몇 번 펼칠 수 있나요?</dt><dd>지금은 첫 펼치기와 다시 펼치기 모두 무료예요. 광고를 보거나 회원가입을 할 필요가 없어요.</dd>
         <dt>사진 속 사람들은 누구인가요?</dt><dd>사진 100장은 AI로 만든 가상의 성인들로, 실제 모임을 촬영한 사진이 아니에요. 거리·카페 등 일상 장면 95장과 축구장 등 특별 장면 5장이 있어요. 사람 수는 이미지를 직접 확인해 기록했어요.</dd>
-        <dt>무엇을 저장하나요?</dt><dd>무료 이용 여부·남은 재시도 권리·직전 사진 번호만 브라우저의 세션 저장소에 기록해요. 이 테스트 버전은 계정, 분석 도구, 추적 광고를 사용하지 않아요.</dd>
+        <dt>무엇을 저장하나요?</dt><dd>첫 펼치기 여부와 직전 사진 번호를 브라우저의 세션 저장소에 기록해요. 현재 광고나 방문 분석 도구를 불러오지 않아요. 자세한 내용은 <a href="./privacy.html">개인정보처리방침</a>에서 확인할 수 있어요.</dd>
       </dl>
     </dialog>
     <noscript><p class="no-script">책을 펼치려면 브라우저에서 JavaScript를 켜 주세요.</p></noscript>

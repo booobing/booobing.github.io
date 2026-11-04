@@ -5,6 +5,8 @@ required:
   - test_optional
   - speckit_optional
   - clarification_debt
+  - web_syntax
+  - web_game
 commands:
   charter_exists: "uv run --frozen python -c \"from pathlib import Path; assert Path('docs/charter.md').exists() or Path('docs/charter.template.md').exists()\""
   repo_cleanliness_review: "uv run --frozen python -m pytest -q tests/test_template_integrity.py"
@@ -12,6 +14,8 @@ commands:
   test_optional: "uv run --frozen python -m pytest -q"
   speckit_optional: "uv run --frozen python .harness/scripts/speckit_status.py"
   clarification_debt: "uv run --frozen python .harness/scripts/cd_status.py"
+  web_syntax: "node --check web/game.js && node --check web/photos.js && node --check tests/web-game.mjs"
+  web_game: "node tests/web-game.mjs"
 policies:
   charter_first: "Every task should have docs/charter.md or an explicit task charter before implementation."
   scratch_root: "Scratch outputs belong under .harness/tmp/ and should not be committed."

@@ -81,24 +81,50 @@ h1 { margin: 0; font-family: "Batang", "AppleMyungjo", Georgia, serif; font-size
 .button-arrow { font-size: 18px; font-weight: 300; color: #d7b981; }
 .play-note { color: #b1aa9e; font-size: 9px; margin: 12px 0 0; line-height: 1.8; text-shadow: 0 2px 6px #000; }
 .storage-warning { color: #e4bf8c; font-size: 11px; max-width: 400px; margin: 12px auto; line-height: 1.7; }
-.banner-ad { margin: 29px auto 0; min-height: 49px; width: min(630px, calc(100% - 40px)); padding: 12px 17px; border-block: 1px solid #b894502b; background: #080b11a8; display: flex; align-items: center; justify-content: center; gap: 18px; color: #c0b5a0; font-size: 10px; }
-.ad-label { border: 1px solid #b194615e; font: 8px/1 "Segoe UI", sans-serif; color: #d1b782; padding: 3px 4px; border-radius: 1px; }
-.banner-demo { color: #a99c85; padding-left: 17px; border-left: 1px solid #b1946140; font-size: 9px; }
-.site-footer { width: min(1152px, calc(100% - 80px)); margin: 27px auto 0; padding: 20px 0 23px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: #b1a58f; font-size: 9px; }
+.reading-section { width: min(1000px, calc(100% - 80px)); margin: 72px auto 0; padding-top: 42px; border-top: 1px solid var(--rule); text-align: left; }
+.reading-section h2, .document-page h2 { font: 400 29px/1.5 "Batang", "AppleMyungjo", Georgia, serif; color: #f0dfbd; margin: 8px 0 20px; }
+.reading-section p, .document-page p { color: var(--muted); font-size: 13px; line-height: 1.95; }
+.reading-section .eyebrow, .document-page .eyebrow { font-size: 9px; color: var(--gold); }
+.reading-section a, dialog a, .document-page a:not(.primary-button) { color: #e0c79e; text-underline-offset: 4px; }
+.section-lead { max-width: 640px; }
+.how-to { list-style: decimal-leading-zero; padding: 0; margin: 32px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 38px; counter-reset: steps; }
+.how-to li { list-style: none; counter-increment: steps; }
+.how-to li::before { content: "0" counter(steps); display: block; color: var(--gold); font: 20px Georgia, serif; margin-bottom: 14px; }
+.how-to strong { font-size: 14px; font-weight: 500; color: var(--ink); }
+.how-to p { margin: 9px 0 0; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+.section-heading h2 { margin-bottom: 0; }
+.section-heading > p { font-size: 11px; margin-bottom: 5px; }
+.scene-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.scene-gallery figure { margin: 0; min-width: 0; }
+.scene-gallery figure > a { display: block; }
+.scene-gallery img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; transition: filter .2s; }
+.scene-gallery a:hover img { filter: brightness(1.1); }
+.scene-kind { display: block; margin-top: 20px; font-size: 10px; color: var(--gold); }
+.scene-gallery h3 { margin: 9px 0 0; font-size: 14px; font-weight: 500; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.scene-gallery h3 span { color: #e0c79e; font: 18px Georgia, serif; white-space: nowrap; }
+.scene-gallery p { font-size: 12px; margin-bottom: 0; }
+.making-section { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; margin-bottom: 68px; }
+.making-copy p:first-child { margin-top: 0; }
+.document-page { width: min(740px, calc(100% - 48px)); margin: 55px auto 70px; text-align: left; }
+.document-page h1 { font-size: clamp(27px, 5vw, 40px); letter-spacing: 1px; }
+.document-page .document-date { font-size: 11px; margin: 20px 0 32px; }
+.document-page section { margin-top: 38px; }
+.document-page h2 { font-size: 23px; margin-bottom: 10px; }
+.document-page .primary-button { color: var(--ink); text-decoration: none; margin-top: 30px; }
+.site-footer { width: min(1152px, calc(100% - 80px)); margin: 27px auto 0; padding: 20px 0 23px; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; color: #b1a58f; font-size: 9px; }
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 18px; }
+.site-footer a { color: #d0c4ae; text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .site-footer > span:last-child { font: 8px "Segoe UI", sans-serif; letter-spacing: 1.6px; }
 dialog { width: min(440px, calc(100% - 32px)); padding: 42px 32px 24px; color: var(--ink); border: 1px solid #b291586e; border-radius: 3px; background: linear-gradient(145deg, #1c1e22, #0e1117); text-align: center; box-shadow: inset 0 0 0 5px #0b0e1355, 0 20px 90px #000b; max-height: calc(100dvh - 32px); overflow-y: auto; }
 dialog[open] { animation: arrive .2s both; }
 dialog::backdrop { background: #020409c7; backdrop-filter: blur(6px); }
 .dialog-close { position: absolute; right: 9px; top: 7px; border: 0; background: transparent; color: #d8c6a5; width: 42px; height: 42px; font-size: 26px; }
-.dialog-symbol { color: #d8b473; font: 40px Georgia, serif; }
 dialog .eyebrow { font-size: 9px; margin-top: 18px; }
 dialog h2 { font-family: "Batang", "AppleMyungjo", Georgia, serif; font-size: 23px; font-weight: 400; letter-spacing: -1px; line-height: 1.5; color: #f0dfbd; }
 dialog p:not(.eyebrow) { color: #c6beb0; font-size: 12px; line-height: 1.9; }
 dialog .primary-button { width: 100%; min-width: 0; gap: 12px; margin-top: 12px; }
-.secondary-button { border: 0; background: transparent; padding: 15px; color: #c0b6a4; font-size: 12px; }
-.demo-creative { background: radial-gradient(ellipse at center, #66502b66, #11151c); border-block: 1px solid #b38e4c4d; padding: 24px; display: flex; flex-direction: column; gap: 16px; color: #ead8b2; margin: 24px 0; }
-.demo-creative > span { color: #d6ad66; font-size: 26px; }
-.demo-creative i { font: italic 30px/1.2 Georgia, serif; }
 .about-list { text-align: left; font-size: 12px; line-height: 1.9; }
 .about-list dt { font-weight: 700; color: #e0c79e; margin-top: 18px; }
 .about-list dd { color: #bcb3a4; margin: 4px 0 0; }
@@ -116,7 +142,6 @@ dialog .primary-button { width: 100%; min-width: 0; gap: 12px; margin-top: 12px;
   .status { margin-bottom: 10px; }
   .result-summary { margin-top: 5px; }
   .primary-button { min-height: 48px; }
-  .banner-ad { margin-top: 22px; }
 }
 @media (max-width: 600px) {
   .site-header { height: 66px; padding: 0 23px; }
@@ -132,8 +157,16 @@ dialog .primary-button { width: 100%; min-width: 0; gap: 12px; margin-top: 12px;
   .result-summary strong { font-size: 42px; }
   .game-controls { margin-top: 16px; }
   .primary-button { min-height: 52px; min-width: 248px; }
-  .banner-ad { margin-top: 27px; gap: 12px; padding: 12px; font-size: 9px; }
-  .banner-demo { padding-left: 12px; font-size: 8px; }
+  .reading-section { width: calc(100% - 46px); margin-top: 48px; padding-top: 30px; }
+  .reading-section h2 { font-size: 25px; }
+  .how-to, .scene-gallery, .making-section { grid-template-columns: 1fr; gap: 28px; }
+  .section-heading { display: block; }
+  .section-heading > p { margin-top: 12px; }
+  .scene-gallery { gap: 38px; }
+  .scene-kind { margin-top: 15px; }
+  .making-section { gap: 6px; margin-bottom: 45px; }
+  .making-section h2 br { display: none; }
+  .document-page { margin-top: 30px; }
   .site-footer { width: calc(100% - 46px); margin-top: 24px; font-size: 8px; }
   .site-footer > span:last-child { font-size: 7px; letter-spacing: .7px; }
   dialog { padding: 37px 24px 20px; }
@@ -141,8 +174,6 @@ dialog .primary-button { width: 100%; min-width: 0; gap: 12px; margin-top: 12px;
 @media (max-width: 350px) {
   h1 { font-size: 34px; }
   .intro-copy { font-size: 9px; margin-inline: 16px; }
-  .banner-ad { gap: 9px; }
-  .banner-demo { padding-left: 9px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

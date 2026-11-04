@@ -3,7 +3,7 @@ import { photos } from "./photos.js";
 const $ = (id) => document.getElementById(id);
 const storageKey = "people-book:v1";
 const photoRevealTime = 1.45;
-const state = { usedFree: false, credit: false, previous: null };
+const state = { usedFree: false, previous: null };
 let storageAvailable = true;
 let busy = false;
 let current = null;
@@ -74,7 +74,6 @@ try {
   const stored = JSON.parse(sessionStorage.getItem(storageKey) || "null");
   if (stored && typeof stored === "object") {
     state.usedFree = stored.usedFree === true;
-    state.credit = state.usedFree && stored.credit === true;
     state.previous = photos.some((photo) => photo.id === stored.previous) ? stored.previous : null;
   }
   sessionStorage.setItem(storageKey, JSON.stringify(state));
@@ -95,9 +94,8 @@ function renderControls() {
   $("book-stage").setAttribute("aria-busy", String(busy));
   $("storage-warning").hidden = storageAvailable;
   $("draw-label").textContent = busy ? "페이지를 펼치는 중" :
-    !state.usedFree ? "펼치기!" : state.credit ? "다시 펼치기!" : "광고 보고 다시 펼치기!";
-  $("play-note").textContent = !state.usedFree ? "첫 펼치기는 무료 · 다시 펼칠 때는 광고 시청" :
-    state.credit ? "시청한 광고로 한 번 더 펼칠 수 있어요." : "광고 연동 전 테스트 모드 · 실제 광고는 나오지 않아요.";
+    !state.usedFree ? "펼치기!" : "다시 펼치기!";
+  $("play-note").textContent = "광고 없이 무료로 펼쳐 보세요. 같은 사진은 연속으로 나오지 않아요.";
   $("status").textContent = error || (busy && !photoVisible ? "어떤 만남이 기다리고 있을까요…" :
     current ? (["unavailable", "timeout"].includes(videoOutcome) ? "영상 재생을 건너뛰고 사진을 펼쳤어요." : "빛 속에서 새로운 만남을 발견했어요.") :
     state.usedFree ? "새로운 페이지를 만나 보세요." : "당신을 위한 첫 페이지가 기다리고 있어요.");
@@ -179,7 +177,7 @@ function loadPhoto(src) {
 }
 
 async function draw() {
-  if (busy || (state.usedFree && !state.credit)) return;
+  if (busy) return;
   busy = true;
   error = "";
   renderControls();
@@ -196,13 +194,12 @@ async function draw() {
       current = photo;
       photoVisible = true;
       state.usedFree = true;
-      state.credit = false;
       state.previous = photo.id;
       persist();
       renderControls();
     });
   } catch {
-    error = "사진을 불러오지 못했어요. 이용 횟수는 차감되지 않았어요. 다시 펼쳐 주세요.";
+    error = "사진을 불러오지 못했어요. 잠시 후 다시 펼쳐 주세요.";
   } finally {
     cancelOpening?.();
     opening = false;
@@ -212,49 +209,16 @@ async function draw() {
   }
 }
 
-function openRewardPrompt() {
-  stopLobbyHover();
-  $("reward-prompt").hidden = false;
-  $("reward-demo").hidden = true;
-  $("reward-dialog").setAttribute("aria-labelledby", "reward-title");
-  $("reward-dialog").setAttribute("aria-describedby", "reward-description");
-  $("reward-dialog").showModal();
-  $("watch-demo").focus();
-}
-
-$("draw-button").addEventListener("click", () => {
-  if (busy) return;
-  if (!state.usedFree || state.credit) void draw();
-  else openRewardPrompt();
-});
-$("watch-demo").addEventListener("click", () => {
-  $("reward-prompt").hidden = true;
-  $("reward-demo").hidden = false;
-  $("reward-dialog").setAttribute("aria-labelledby", "demo-title");
-  $("reward-dialog").removeAttribute("aria-describedby");
-  $("demo-title").focus();
-});
-$("complete-demo").addEventListener("click", () => {
-  if (!$("reward-dialog").open || $("reward-demo").hidden || busy) return;
-  // This is an explicitly labelled demo. A live ad integration must grant credit
-  // from its provider's reward event, never a close event or a local timer.
-  state.credit = true;
-  persist();
-  $("reward-dialog").close();
-  void draw();
-});
-for (const id of ["reward-close", "reward-cancel"]) {
-  $(id).addEventListener("click", () => $("reward-dialog").close());
-}
+// Free replay remains enabled until a real rewarded-ad provider is integrated.
+$("draw-button").addEventListener("click", () => void draw());
 $("about-button").addEventListener("click", () => { stopLobbyHover(); $("about-dialog").showModal(); });
 $("about-close").addEventListener("click", () => $("about-dialog").close());
 
 window.render_game_to_text = () => JSON.stringify({
-  mode: busy ? (opening ? "opening" : "loading") : $("reward-dialog").open ?
-    ($("reward-demo").hidden ? "reward-prompt" : "demo-ad") : current ? "revealed" : "closed",
+  mode: busy ? (opening ? "opening" : "loading") : current ? "revealed" : "closed",
   photo: current && photoVisible ? { id: current.id, count: current.count, caption: current.caption } : null,
-  usedFree: state.usedFree, replayCredit: state.credit, storageAvailable, error,
-  adMode: "demo", videoOutcome, photoVisible, coordinates: "DOM layout; no spatial game coordinates",
+  usedFree: state.usedFree, storageAvailable, error,
+  adMode: "off", videoOutcome, photoVisible, coordinates: "DOM layout; no spatial game coordinates",
   lobby: { hovering: $("lobby-book").classList.contains("is-awake"), particles: $("lobby-particles").childElementCount },
 });
 // No simulation clock: this game advances only through user actions and image loads.
