@@ -75,6 +75,23 @@ try {
   page.on("request", (request) => { if (peoplePattern.test(request.url())) photoRequests++; });
   await page.goto(url);
   await waitMode(page, "closed");
+  for (const viewport of [{width: 600, height: 500}, {width: 390, height: 844}, {width: 1280, height: 720}]) {
+    await page.setViewportSize(viewport);
+    const layout = await page.evaluate(() => {
+      const stage = document.querySelector("#book-stage").getBoundingClientRect();
+      const button = document.querySelector("#draw-button");
+      const action = button.getBoundingClientRect();
+      const guide = document.querySelector("#guide").getBoundingClientRect();
+      const hit = document.elementFromPoint(action.left + action.width / 2, action.top + action.height / 2);
+      return { stageTop: stage.top, stageBottom: stage.bottom, actionBottom: action.bottom,
+        guideTop: guide.top, height: innerHeight, clickable: !button.disabled && button.contains(hit) };
+    });
+    check(layout.stageTop >= 0 && layout.stageBottom <= layout.height && layout.actionBottom <= layout.height &&
+      layout.clickable && layout.guideTop >= layout.height,
+      `the first ${viewport.width}×${viewport.height} screen prioritizes the book and playable button (${JSON.stringify(layout)})`);
+    if (viewport.height === 500) await page.screenshot({ path: resolve(artifacts, "compact-first-screen.png") });
+  }
+  await page.setViewportSize({ width: 1440, height: 1000 });
   check(photoRequests === 0, "full-size game photos are not downloaded before opening the book");
   check(await page.locator("#closed-book").isVisible(), "initial book cover is visible");
   await page.locator("#lobby-book").hover();

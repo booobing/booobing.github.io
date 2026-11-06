@@ -7,6 +7,7 @@
   --muted: #b7b1a5;
   --gold: #c8a66b;
   --rule: #b8945038;
+  --header-height: 82px;
   font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
   font-synthesis: none;
   color: var(--ink);
@@ -20,12 +21,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; cursor: pointer; touch-action: manipulation; }
 button:disabled { cursor: wait; opacity: .58; }
 button:focus-visible, a:focus-visible { outline: 2px solid #ffe2a8; outline-offset: 5px; }
-.site-header { height: 82px; max-width: 1240px; margin: auto; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; }
+.site-header { height: var(--header-height); max-width: 1240px; margin: auto; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; }
 .brand { display: flex; align-items: center; gap: 11px; color: #e2c18b; text-decoration: none; font-family: "Batang", "AppleMyungjo", Georgia, serif; font-size: 19px; font-weight: 400; letter-spacing: 1px; }
 .brand svg { width: 27px; height: 27px; fill: none; stroke: currentColor; stroke-width: 1.1; }
 .text-button { background: transparent; border: 0; padding: 13px 0 13px 12px; font-size: 12px; color: #d0c4ae; }
 .text-button span { margin-left: 10px; color: var(--gold); }
 main { text-align: center; }
+.game { min-height: calc(100svh - var(--header-height)); padding-bottom: 24px; }
 .intro { padding-top: 13px; animation: arrive .8s ease-out both; }
 .eyebrow { font: 9px/1.5 "Segoe UI", sans-serif; letter-spacing: 4px; font-weight: 500; color: var(--gold); }
 .intro .eyebrow { margin: 0 0 13px; display: flex; align-items: center; justify-content: center; gap: 17px; }
@@ -79,33 +81,28 @@ h1 { margin: 0; font-family: "Batang", "AppleMyungjo", Georgia, serif; font-size
 .primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 27px; min-height: 53px; min-width: 254px; padding: 14px 28px; border: 1px solid #b28e50; border-radius: 2px; background: linear-gradient(180deg, #403422ed, #201c17f2); color: #f4e7cb; font-size: 13px; font-weight: 500; letter-spacing: .8px; box-shadow: inset 0 0 0 3px #0b0c0e, 0 5px 24px #0008; transition: border-color .2s, box-shadow .2s, transform .2s; }
 .primary-button:hover:not(:disabled) { border-color: #f5d79e; box-shadow: inset 0 0 0 3px #0b0c0e, 0 0 25px #dba55826; transform: translateY(-1px); }
 .button-arrow { font-size: 18px; font-weight: 300; color: #d7b981; }
+.game-controls .primary-button { background: linear-gradient(180deg, #f3d998, #c9974d); border-color: #f0d092; color: #201509; font-size: 15px; font-weight: 700; box-shadow: 0 5px 24px #0009, inset 0 0 0 2px #f5dea04d; }
+.game-controls .button-arrow { color: inherit; }
 .play-note { color: #b1aa9e; font-size: 9px; margin: 12px 0 0; line-height: 1.8; text-shadow: 0 2px 6px #000; }
 .storage-warning { color: #e4bf8c; font-size: 11px; max-width: 400px; margin: 12px auto; line-height: 1.7; }
-.reading-section { width: min(1000px, calc(100% - 80px)); margin: 72px auto 0; padding-top: 42px; border-top: 1px solid var(--rule); text-align: left; }
-.reading-section h2, .document-page h2 { font: 400 29px/1.5 "Batang", "AppleMyungjo", Georgia, serif; color: #f0dfbd; margin: 8px 0 20px; }
+.reading-section { width: min(780px, calc(100% - 48px)); margin: 28px auto 0; padding-top: 20px; border-top: 1px solid var(--rule); text-align: left; }
+.game + .reading-section { margin-top: 0; }
+.reading-section h2, .document-page h2 { font: 400 23px/1.5 "Batang", "AppleMyungjo", Georgia, serif; color: #f0dfbd; margin: 0 0 8px; }
 .reading-section p, .document-page p { color: var(--muted); font-size: 13px; line-height: 1.95; }
-.reading-section .eyebrow, .document-page .eyebrow { font-size: 9px; color: var(--gold); }
+.document-page .eyebrow { font-size: 9px; color: var(--gold); }
 .reading-section a, dialog a, .document-page a:not(.primary-button) { color: #e0c79e; text-underline-offset: 4px; }
-.section-lead { max-width: 640px; }
-.how-to { list-style: decimal-leading-zero; padding: 0; margin: 32px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 38px; counter-reset: steps; }
-.how-to li { list-style: none; counter-increment: steps; }
-.how-to li::before { content: "0" counter(steps); display: block; color: var(--gold); font: 20px Georgia, serif; margin-bottom: 14px; }
-.how-to strong { font-size: 14px; font-weight: 500; color: var(--ink); }
-.how-to p { margin: 9px 0 0; }
-.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+.section-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 12px; }
 .section-heading h2 { margin-bottom: 0; }
-.section-heading > p { font-size: 11px; margin-bottom: 5px; }
-.scene-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.section-heading > p { font-size: 11px; margin: 0; }
+.scene-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .scene-gallery figure { margin: 0; min-width: 0; }
 .scene-gallery figure > a { display: block; }
 .scene-gallery img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; transition: filter .2s; }
 .scene-gallery a:hover img { filter: brightness(1.1); }
-.scene-kind { display: block; margin-top: 20px; font-size: 10px; color: var(--gold); }
-.scene-gallery h3 { margin: 9px 0 0; font-size: 14px; font-weight: 500; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.scene-kind { display: block; margin-top: 10px; font-size: 10px; color: var(--gold); }
+.scene-gallery h3 { margin: 4px 0 0; font-size: 14px; font-weight: 500; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 8px; }
 .scene-gallery h3 span { color: #e0c79e; font: 18px Georgia, serif; white-space: nowrap; }
-.scene-gallery p { font-size: 12px; margin-bottom: 0; }
-.making-section { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; margin-bottom: 68px; }
-.making-copy p:first-child { margin-top: 0; }
+.scene-gallery p { font-size: 12px; margin: 4px 0 0; }
 .document-page { width: min(740px, calc(100% - 48px)); margin: 55px auto 70px; text-align: left; }
 .document-page h1 { font-size: clamp(27px, 5vw, 40px); letter-spacing: 1px; }
 .document-page .document-date { font-size: 11px; margin: 20px 0 32px; }
@@ -132,19 +129,20 @@ dialog .primary-button { width: 100%; min-width: 0; gap: 12px; margin-top: 12px;
 @keyframes arrive { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes photo-reveal { from { opacity: 0; filter: brightness(1.45); } to { opacity: 1; filter: brightness(1); } }
 @media (min-width: 601px) and (max-height: 950px) {
-  .site-header { height: 62px; }
+  :root { --header-height: 62px; }
   .intro { padding-top: 5px; }
   .intro .eyebrow { margin-bottom: 9px; }
   h1 { font-size: 43px; }
   .intro-copy { margin-top: 10px; font-size: 11px; }
-  .book-stage { width: min(720px, calc(100% - 36px), calc((100svh - 350px) * 1.6)); margin-top: 14px; }
+  .book-stage { width: min(720px, calc(100% - 36px), max(192px, calc((100svh - 350px) * 1.6))); margin-top: 14px; }
   .game-controls { margin-top: 10px; }
   .status { margin-bottom: 10px; }
   .result-summary { margin-top: 5px; }
   .primary-button { min-height: 48px; }
 }
 @media (max-width: 600px) {
-  .site-header { height: 66px; padding: 0 23px; }
+  :root { --header-height: 66px; }
+  .site-header { padding: 0 23px; }
   .brand { font-size: 16px; gap: 8px; }
   .brand svg { width: 24px; height: 24px; }
   .text-button { font-size: 11px; }
@@ -153,19 +151,14 @@ dialog .primary-button { width: 100%; min-width: 0; gap: 12px; margin-top: 12px;
   .intro .eyebrow::before, .intro .eyebrow::after { width: 22px; }
   h1 { font-size: 38px; letter-spacing: 3px; }
   .intro-copy { font-size: 10px; margin: 12px 20px 0; }
-  .book-stage { width: calc(100% - 24px); margin-top: 17px; }
+  .book-stage { width: min(calc(100% - 24px), max(192px, calc((100svh - 322px) * 1.6))); margin-top: 17px; }
   .result-summary strong { font-size: 42px; }
   .game-controls { margin-top: 16px; }
   .primary-button { min-height: 52px; min-width: 248px; }
-  .reading-section { width: calc(100% - 46px); margin-top: 48px; padding-top: 30px; }
-  .reading-section h2 { font-size: 25px; }
-  .how-to, .scene-gallery, .making-section { grid-template-columns: 1fr; gap: 28px; }
-  .section-heading { display: block; }
-  .section-heading > p { margin-top: 12px; }
-  .scene-gallery { gap: 38px; }
-  .scene-kind { margin-top: 15px; }
-  .making-section { gap: 6px; margin-bottom: 45px; }
-  .making-section h2 br { display: none; }
+  .reading-section h2 { font-size: 21px; }
+  .scene-gallery { grid-template-columns: 1fr; }
+  .scene-gallery figure { display: grid; grid-template-columns: 88px 1fr; gap: 12px; align-items: start; }
+  .scene-kind { margin-top: 0; }
   .document-page { margin-top: 30px; }
   .site-footer { width: calc(100% - 46px); margin-top: 24px; font-size: 8px; }
   .site-footer > span:last-child { font-size: 7px; letter-spacing: .7px; }

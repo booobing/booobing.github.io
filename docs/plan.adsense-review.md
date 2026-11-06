@@ -102,3 +102,18 @@
 - Public verification: 실제 홈페이지/개인정보 HTTP 200, 정적 사진 예시 3개와 예시 파일 3/3 HTTP 200, 계정 메타 태그 있음, 광고 런타임·데모 창 없음, 공개 JS와 검증한 로컬 JS 내용 일치. `.harness/tmp/adsense-published-b2811f9.html`에 공개 HTML을 보관했다.
 - UI proof: 기존 IAB 오류 탭은 잘못된 오류 페이지 상태를 유지해 새로운 IAB 탭에서 `https://booobing.github.io/`를 열었다. 새 정적 콘텐츠와 무료 이용 문구를 실제 AX/스크린샷으로 확인했다. 공개 결과 탭을 deliverable로 유지했으며 `.harness/tmp/adsense-public-content.png`에 저장했다.
 - Remaining external action: AdSense 계정에서 확인 방법을 선택해야 하면 메타 태그를 사용하고 수정된 사이트의 재검토를 요청한다. 계정 설정·재검토 신청은 실행하지 않았으며 정책 승인 여부는 Google이 판단한다.
+
+## 2026-11-06 첫 화면 교정
+
+- 사용자 요청은 보조 설명보다 메인 게임이 먼저 보이게 하라는 교정과 다른 웹게임의 광고 승인 방식 조사다. 앞서 승인한 동일 애드센스 대응의 화면 수정 범위에서 진행한다. 이전 승인과 새 검증을 이 기록에 연결하고 CD 이력과 상태를 보존한다.
+- 목표는 첫 뷰포트에서 책과 활성화된 펼치기 버튼을 모두 보여주는 것이다. 기존 예시·제작 설명은 짧게 정리해 아래에 배치하고, 조사에서 확인한 승인과 광고 도입 경로를 별도로 설명한다.
+- 수정 파일은 `web/index.html`, `web/styles.css`, CSS 캐시 버전이 같은 `web/privacy.html`, `tests/web-game.mjs`, 이 기록과 로컬 교정 이력이다. 광고 계정·신청·SDK, 추첨과 영상 동작, 사진 및 개인정보 문구는 범위 밖이다.
+- 화면 높이에 따른 책 크기와 최소 첫 화면 높이를 기존 CSS에 적용한다. 일반 화면과 좁고 낮은 화면의 첫 진입에서 시작 버튼과 콘텐츠 순서를 재현하고, 기존 검증과 실제 공개 페이지를 확인한다.
+
+과거 Newgrounds Flash 광고는 포털 관리자가 신청을 승인했다. 현재 Poki는 자체 SDK로 광고를 배치하며, CrazyGames는 첫 출시에서 플레이 지표를 검증하고 정식 출시에서 광고 수익을 배분한다. Google의 공식 CardGames.io 사례는 별도 신청 제품인 H5 Games Ads를 사용한다. Dandle의 공개 페이지는 게임을 먼저 열고 가이드와 레벨 정보를 링크로 제공하며, 운영 정책에 레벨 사이의 AdSense 광고가 명시되어 있다. Neal.fun은 웹 광고 파트너로 AdSense, Ad Manager, Playwire를 공개한다. 공개 사례에서 개별 사이트의 최초 승인 사유와 당시 신청본은 확인되지 않았다.
+
+- 근거는 [Newgrounds Flash 광고](https://www.newgrounds.com/wiki/creator-resources/flash-api/using-flash-ads), [Poki 광고](https://developers.poki.com/guide/how-monetization-works), [CrazyGames 출시 심사](https://docs.crazygames.com/), [Google CardGames.io 사례](https://adsense.google.com/intl/ko-kr/start/success-stories/transitioning-to-html5-games-ads-boosts-revenue-and-enhances-user-experience-for-digital-card-game-developer-cardgames-io/), [Dandle 광고·개인정보](https://dandle.online/privacy), [Neal.fun 광고 파트너](https://neal.fun/privacy-policy/)를 참고했다.
+- RCA: 검증용 탭을 `#guide`에 남겨 게임이 없는 화면을 먼저 보여줬다. 기존 모바일 검사는 세로로 긴 화면과 클릭 후 배치에 치우쳐 600×500에서 시작 버튼 아래쪽이 664px에 놓이는 문제를 놓쳤다. 390×844에서도 보조 안내가 608px부터 보였다.
+- 교정: 게임을 첫 뷰포트에 배치하고 낮은 화면에서 책의 높이를 제한했다. 펼치기 버튼의 대비를 높였다. 아래에는 짧은 안내와 사진 예시 세 장, 제작·검수 설명을 배치했다. 하단의 게임 복귀 링크는 `#play`를 가리킨다.
+- 검증: 600×500에서 버튼 하단 481px, 390×844에서 532px, 1280×720에서 651px. 세 화면에서 버튼이 활성 상태이며 시작점에서 클릭할 수 있다. 브라우저 79개 검사와 Ruff·JS 구문·diff 검사 통과. pytest 28개 통과, 기존 bash+uv 훅 검사 1개 건너뜀. Spec Kit 미설정. CD 305/HALT를 기록했고 이번 교정에는 앞선 동일 작업의 명시적 진행 범위를 적용했다.
+- 리뷰와 교훈: 수정할 것 없음. 외부 공개를 검증할 때 화면 맨 위의 실제 접속 주소와 첫 뷰포트에서 시작 버튼의 경계를 확인한다. 사용자가 볼 링크에는 안내 검증용 해시를 남기지 않는다.
