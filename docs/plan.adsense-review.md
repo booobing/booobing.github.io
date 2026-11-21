@@ -156,3 +156,10 @@
 - Required checks: Charter/범위 검토 PASS, Ruff PASS, pytest 28 passed / 1 skipped (기존 bash+uv 훅 환경), JS 구문 PASS, diff 공백 PASS. Spec Kit은 초기화되지 않아 SKIPPED. CD는 실제 342.5/HALT를 보존하며 위에 연결한 동일 광고 심사 대응의 사용자 승인 범위 예외로 진행했다. HALT를 PASS로 바꾸지 않았다.
 - Final review: 수정할 것 없음. 정적 페이지의 숫자·링크·개인정보 안내를 실제 카탈로그/동작과 대조했고, 이전 미커밋 작업은 분리했다. 광고 파일 발견 상태와 콘텐츠 승인 상태를 구분하며 이번 변경이 승인을 보장한다고 설명하지 않는다. 수동 Windows 화면 캡처는 사용하지 않았다.
 - 공개 배포 결과는 아래에 추가한다.
+
+### 공개 배포 검증
+
+- 제품·브라우저 검사·이 작업 기록만 커밋한 `45dd70a`를 기존 `pages` 원격의 main에 푸시했다. 이전 미커밋 README/charter/기타 계획·스크립트·로컬 lesson은 포함하지 않았다.
+- [Pages 실행 44928458127](https://github.com/booobing/booobing.github.io/actions/runs/44928458127)은 같은 head SHA에서 success로 완료됐다.
+- 공개 홈페이지·gallery.html·gallery.css·privacy.html·ads.txt는 모두 HTTP 200이며 줄바꿈 정규화 후 검증한 로컬 파일과 정확히 일치했다. 공개 도감에 100개 figure가 있고, canonical `/ads.txt`도 쿼리 없이 현재 계정의 정확한 DIRECT 한 줄을 text/plain으로 반환했다.
+- 공개 사이트의 개선은 완료했지만 Google의 승인·ads.txt 재크롤링 결과는 별도 미확인 상태다. 재검토 신청이나 계정 조작은 하지 않았다. 다음 사용자 작업은 애드센스 사이트 상세의 ads.txt 업데이트 확인과 변경된 사이트의 검토 요청이다. 업데이트 확인은 즉시 완료나 승인을 보장하지 않는다.
