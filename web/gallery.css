@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.gallery-page { width: min(1080px, calc(100% - 48px)); margin: 36px auto 60px; text-align: left; }
+.gallery-page h1 { font-size: clamp(28px, 5vw, 38px); letter-spacing: 1px; }
+.gallery-page > p { max-width: 720px; font-size: 13px; line-height: 1.9; color: var(--muted); }
+.gallery-page a { color: #e0c79e; text-underline-offset: 4px; }
+.gallery-nav { display: flex; flex-wrap: wrap; gap: 16px 24px; padding: 20px 0; margin-top: 24px; border-block: 1px solid var(--rule); font-size: 13px; }
+.gallery-page section { margin-top: 36px; scroll-margin-top: 20px; }
+.gallery-page h2 { margin: 0 0 20px; font: 400 25px/1.5 "Batang", "AppleMyungjo", Georgia, serif; color: #f0dfbd; }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 22px; }
+.gallery-grid figure { margin: 0; min-width: 0; }
+.gallery-grid figure > a { display: block; }
+.gallery-grid img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; background: #0b0e13; }
+.gallery-grid h3 { margin: 10px 0 4px; font-size: 14px; line-height: 1.6; font-weight: 500; overflow-wrap: anywhere; }
+.gallery-count { color: #e0c79e; font-size: 13px; }
+.gallery-review { padding-top: 24px; border-top: 1px solid var(--rule); }
+.gallery-review p { max-width: 760px; color: var(--muted); font-size: 13px; line-height: 1.95; }
+.gallery-page .primary-button { margin-top: 28px; color: var(--ink); text-decoration: none; }
+
+@media (max-width: 600px) {
+  .gallery-page { margin-top: 24px; }
+  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
+  .gallery-grid h3 { font-size: 12px; }
+  .gallery-nav { gap: 14px; font-size: 12px; }
+}

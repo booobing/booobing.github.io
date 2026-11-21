@@ -14,7 +14,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const webRoot = resolve(root, "web");
 const artifacts = resolve(root, ".harness/tmp/magic-book");
 await mkdir(artifacts, { recursive: true });
-const mime = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".webp": "image/webp", ".webm": "video/webm" };
+const mime = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".txt": "text/plain; charset=utf-8", ".webp": "image/webp", ".webm": "video/webm" };
 const peoplePattern = /\/assets\/(?:two|three|four|scene-[^/]+)\.webp$/;
 // Serve under a repository subpath to catch GitHub Pages asset-path regressions.
 const prefix = "/Magic_book_game/";
@@ -49,14 +49,24 @@ async function newPage(options = {}, random = .021) {
 function check(condition, message) { assert.ok(condition, message); checks++; console.log(`PASS ${message}`); }
 
 try {
+  const adsResponse = await fetch(new URL("ads.txt", url));
+  check(adsResponse.status === 200 && (await adsResponse.text()).trim() ===
+    "google.com, pub-8450600555475262, DIRECT, f08c47fec0942fa0",
+    "publisher ads.txt is publicly readable and authorizes the current Google account");
   const html = await readFile(resolve(webRoot, "index.html"), "utf8");
   check(!/<script[^>]+src=["']https?:\/\//.test(html), "public game does not load advertising SDKs before real ad integration");
   check(/<meta name="google-adsense-account" content="ca-pub-8450600555475262">/.test(html), "publisher verification is retained without an advertising script");
   check(!/id="(?:reward-dialog|watch-demo|complete-demo)"|class="banner-ad"/.test(html), "public game contains no placeholder banner or simulated ad reward flow");
   const privacyHtml = await readFile(resolve(webRoot, "privacy.html"), "utf8");
+  const galleryHtml = await readFile(resolve(webRoot, "gallery.html"), "utf8");
   const cssVersion = createHash("sha256").update((await readFile(resolve(webRoot,"styles.css"),"utf8")).replace(/\r\n/g,"\n")).digest("hex").slice(0,12);
   const jsVersion = createHash("sha256").update((await readFile(resolve(webRoot,"game.js"),"utf8")).replace(/\r\n/g,"\n")).digest("hex").slice(0,12);
   check(html.includes(`styles.css?v=${cssVersion}`) && privacyHtml.includes(`styles.css?v=${cssVersion}`) && html.includes(`game.js?v=${jsVersion}`), "all page asset versions match the current CSS and game content");
+  const galleryCssVersion = createHash("sha256")
+    .update((await readFile(resolve(webRoot, "gallery.css"), "utf8")).replace(/\r\n/g, "\n"))
+    .digest("hex").slice(0, 12);
+  check(galleryHtml.includes(`styles.css?v=${cssVersion}`) && galleryHtml.includes(`gallery.css?v=${galleryCssVersion}`),
+    "photo archive uses the current shared and dedicated styles");
   const manifest = JSON.parse(await readFile(resolve(root, "docs/photos.manifest.json"), "utf8"));
   check(photos.length === 100 && manifest.scenes.length === 100, "catalog contains exactly 100 photos");
   check(new Set(photos.map((photo) => photo.id)).size === 100 && new Set(photos.map((photo) => photo.src)).size === 100, "all 100 IDs and asset paths are unique");
@@ -219,6 +229,38 @@ try {
   await noJs.locator("#scenes").scrollIntoViewIfNeeded();
   check(await noJs.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "static photo content fits a 320px screen");
   await noJs.screenshot({path:resolve(artifacts,"static-content-mobile.png"),fullPage:true});
+  await noJs.locator(".site-footer a[href='./gallery.html']").click();
+  await noJs.waitForLoadState("networkidle");
+  check((await noJs.locator("h1").innerText()) === "책 속의 사진 도감" &&
+    await noJs.locator(".gallery-grid figure").count() === 100,
+    "the game links to all 100 archive entries without requiring JavaScript");
+  const archiveRecords = await noJs.locator(".gallery-grid figure").evaluateAll(figures => figures.map(figure => ({
+    id: figure.dataset.photoId,
+    caption: figure.querySelector("h3").textContent,
+    count: Number(figure.querySelector(".gallery-count").textContent.match(/(\d+)명/)[1]),
+    href: figure.querySelector("a").getAttribute("href"),
+    image: figure.querySelector("img").getAttribute("src"),
+  })));
+  check(new Set(archiveRecords.map(record => record.id)).size === 100 && archiveRecords.every(record => {
+    const photo = photos.find(photo => photo.id === record.id);
+    return photo && record.caption === photo.caption && record.count === photo.count &&
+      photo.src.endsWith(record.href.slice(1)) && record.image === record.href;
+  }), "every published archive caption, displayed count and original image matches the reviewed catalog");
+  check(await noJs.locator("#everyday figure").count() === 95 && await noJs.locator("#special figure").count() === 5 &&
+    (await noJs.locator("#review").innerText()).includes("전체 프레임"),
+    "archive separates everyday and special scenes and explains the full-frame review method");
+  check(await noJs.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    "100-photo archive fits a 320px screen");
+  await noJs.locator("main a[href='./']").click();
+  check(await noJs.locator("#draw-button").isVisible() && await noJs.locator("#play-title").count() === 1,
+    "archive returns directly to the game under a repository subpath");
+  const lazyArchive = await newPage({ viewport: { width: 320, height: 640 } });
+  let galleryPhotoRequests = 0;
+  lazyArchive.on("request", request => { if (peoplePattern.test(request.url())) galleryPhotoRequests++; });
+  await lazyArchive.goto(new URL("gallery.html", url).href);
+  await lazyArchive.waitForLoadState("networkidle");
+  check(galleryPhotoRequests > 0 && galleryPhotoRequests < 100,
+    `normal browsing displays the full archive index while loading nearby photos (${galleryPhotoRequests}/100 requests)`);
   const catalogPage = await newPage();
   await catalogPage.goto(url);
   const dimensions = await catalogPage.evaluate(async (files) => Promise.all(files.map(async (file) => {
